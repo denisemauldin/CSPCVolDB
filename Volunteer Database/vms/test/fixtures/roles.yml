@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Name: MyString
+  Lead: MyString
+  Training: 1
+  Shadowing: MyString
+  Desc: MyText
+
+two:
+  Name: MyString
+  Lead: MyString
+  Training: 1
+  Shadowing: MyString
+  Desc: MyText
