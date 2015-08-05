@@ -18,7 +18,8 @@ class RolesControllerTest < ActionController::TestCase
 
   test "should create role" do
     assert_difference('Role.count') do
-      post :create, role: { Desc: @role.Desc, Lead: @role.Lead, Name: @role.Name, Shadowing: @role.Shadowing, Training: @role.Training }
+      puts @role.inspect
+      post :create, role: { desc: @role.desc, lead: @role.lead, name: @role.name, shadowing: @role.shadowing, training: @role.training }
     end
 
     assert_redirected_to role_path(assigns(:role))
@@ -35,7 +36,7 @@ class RolesControllerTest < ActionController::TestCase
   end
 
   test "should update role" do
-    patch :update, id: @role, role: { Desc: @role.Desc, Lead: @role.Lead, Name: @role.Name, Shadowing: @role.Shadowing, Training: @role.Training }
+    patch :update, id: @role, role: { desc: @role.desc, lead: @role.lead, name: @role.name, shadowing: @role.shadowing, training: @role.training }
     assert_redirected_to role_path(assigns(:role))
   end
 
