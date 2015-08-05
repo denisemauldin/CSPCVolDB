@@ -5,9 +5,10 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   username: root
+  password: solstice
   host: 127.0.0.1
   port: 3306
 
