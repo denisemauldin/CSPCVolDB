@@ -9,19 +9,25 @@ class User < ActiveRecord::Base
     :uniqueness => {
       :case_sensitive => false
     }
+  validates :member_number, :presence => true
+  has_and_belongs_to_many :positions
 
- def self.find_first_by_auth_conditions(warden_conditions)
-  conditions = warden_conditions.dup
-  if login = conditions.delete(:login)
-    where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-  else
-    if conditions[:username].nil?
-      where(conditions).first
+  def after_sign_in_path_for(user)
+    user.admin? ? admin_dashboard_path : root_path 
+  end
+    
+  def self.find_first_by_auth_conditions(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
     else
-      where(username: conditions[:username]).first
+      if conditions[:username].nil?
+        where(conditions).first
+      else
+        where(username: conditions[:username]).first
+      end
     end
   end
-end
   
   def login=(login)
     @login = login

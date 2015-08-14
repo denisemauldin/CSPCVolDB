@@ -1,10 +1,10 @@
-<%= form_for(@role) do |f| %>
-  <% if @role.errors.any? %>
+<%= form_for(@position) do |f| %>
+  <% if @position.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@role.errors.count, "error") %> prohibited this role from being saved:</h2>
+      <h2><%= pluralize(@position.errors.count, "error") %> prohibited this position from being saved:</h2>
 
       <ul>
-      <% @role.errors.full_messages.each do |message| %>
+      <% @position.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -16,12 +16,8 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :lead %><br>
-    <%= f.text_field :lead %>
-  </div>
-  <div class="field">
     <%= f.label :training %><br>
-    <%= f.select :training, options_for_select(@trainings.collect { |s| [s[0].humanize, s[0]] }, selected: @role.training) %>
+    <%= f.select :training, options_for_select(@trainings.collect { |s| [s[0].humanize, s[0]] }, selected: @position.training) %>
   </div>
   <div class="field">
     <%= f.label :shadowing %><br>

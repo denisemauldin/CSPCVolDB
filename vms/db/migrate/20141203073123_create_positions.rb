@@ -1,8 +1,7 @@
-class CreateRoles < ActiveRecord::Migration
+class CreatePositions < ActiveRecord::Migration
   def change
-    create_table :roles do |t|
+    create_table :positions do |t|
       t.string :name
-      t.string :lead
       t.integer :training, default: 0
       t.integer :shadowing, default: 3
       t.text :desc
