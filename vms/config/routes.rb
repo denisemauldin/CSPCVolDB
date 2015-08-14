@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users #, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   root 'pages#home'
-  resources :roles
+  resources :positions
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.

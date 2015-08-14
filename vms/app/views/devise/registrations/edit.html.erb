@@ -7,6 +7,10 @@
       <%= f.text_field :username, :autofocus => true, class: 'form-control' %>
     </div>
     <div class="form-group">
+      <%= f.label :member_number %>
+      <%= f.text_field :member_number, class: 'form-control' %>
+    </div>
+    <div class="form-group">
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

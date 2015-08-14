@@ -2,14 +2,12 @@
 
 one:
   name: Monitor
-  lead: Monitor Lead
   training: 1
   shadowing: 3
   desc: "Monitor scenes in the dungeon."
 
 two:
   name: Ambassador
-  lead: Ambassador Lead
   training: 1
   shadowing: 3
   desc: "Guide people to the CSPC."

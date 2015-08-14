@@ -6,20 +6,21 @@ class User < ActiveRecord::Base
          :authentication_keys => [ :login ]
   validates :username,
     :presence => true,
-    :uniqueness => {
-      :case_sensitive => false
-    }
-  validates :member_number, :presence => true
+    :uniqueness => { :case_sensitive => false }
+    
   has_and_belongs_to_many :positions
 
   def after_sign_in_path_for(user)
     user.admin? ? admin_dashboard_path : root_path 
   end
-    
+
+
+
+  # make it so that a user can login with their username, email, or member_number    
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      where(conditions).where(["lower(username) = :value OR lower(email) = :value OR lower(member_number) = :value", { :value => login.downcase }]).first
     else
       if conditions[:username].nil?
         where(conditions).first
@@ -34,6 +35,7 @@ class User < ActiveRecord::Base
   end
 
   def login
-    @login || self.username || self.email
+    @login || self.username || self.email || self.member_number
   end
+  # end login conditions code
 end
