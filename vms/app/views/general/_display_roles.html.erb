@@ -1,0 +1,8 @@
+<% if ! user.roles.empty? %> 
+  <p>Roles:</p>
+  <ul>
+  <% for role in user.roles %>
+    <li><%= role.desc %></li>
+  <% end %>
+  </ul>
+<% end %>

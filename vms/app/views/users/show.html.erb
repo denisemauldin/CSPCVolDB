@@ -1,4 +1,8 @@
 <h3>User</h3>
 <p>Name: <%= @user.username if @user.username %></p>
 <p>Email: <%= @user.email if @user.email %></p>
-<p>Member Number: <%= @user.member_number if @user.member_number %></p>                              
+<p>Member Number: <%= @user.member_number if @user.member_number %></p>
+<%= render 'general/display_roles', :user => @user %>
+<% if can?(:edit, @user) %>
+<%= link_to "Edit", edit_user_path(@user) %>
+<% end %>                              

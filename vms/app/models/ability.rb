@@ -5,15 +5,16 @@ class Ability
     user ||= User.new
 
     # default abilities
-    can :read, User
-    can :manage, User, :id => user.id
+    can :read, Position
+    
+    # this is the admin's way to add roles
+    # user can edit their own information via the devise controller
     if user.has_any_role?({:name => :vcd, :name => :dir})
-      can :read, Position
+      can :manage, User
     end
 
-    can :read, ActiveAdmin::Page, :name => "Dashboard"        
+
     if user.has_role?(:dir)
-      can :read, ActiveAdmin::Page, :name => "Dashboard"
       Rails.logger.debug("user #{user.inspect} has role #{user.roles.inspect}")
     end
                 
