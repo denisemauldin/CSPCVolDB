@@ -46,7 +46,6 @@ gem 'ice_cube'
 gem 'recurring_select'
 
 # can copy Devise views to app using: rails g devise:views
-gem 'activeadmin', github: 'activeadmin'
 gem 'devise'
 gem 'cancan'
 gem 'rolify'
