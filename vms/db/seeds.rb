@@ -41,3 +41,13 @@ Position.create(name: 'Workshop-EC',training:1, shadowing:0,desc:'check the chec
 Position.create(name: 'Chef',training:1, shadowing:0,desc:'cook your ass off')
 Position.create(name: 'Facilitator',training:1, shadowing:0,desc:'combo of ambassador and monitor')
 Position.create(name: 'Service Facilitator',training:1, shadowing:0,desc:'keep the servers in line')
+
+Role.create(name: "vcd", desc: "Volunteer Core Director")
+Role.create(name: "dir", desc: "Director")
+Role.create(name: "dir_asst", desc: "Director Assistant")
+Role.create(name: "team_lead", desc: "Team Lead")
+Role.create(name: "champion", desc: "Champion")
+Role.create(name: "ec", desc: "Event Coordinator")
+
+u = User.find(1)
+u.add_role(:dir)

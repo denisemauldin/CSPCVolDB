@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -9,8 +10,8 @@ class User < ActiveRecord::Base
     :uniqueness => { :case_sensitive => false }
     
   has_and_belongs_to_many :positions
-
-  def after_sign_in_path_for(user)
+  
+   def after_sign_in_path_for(user)
     user.admin? ? admin_dashboard_path : root_path 
   end
 

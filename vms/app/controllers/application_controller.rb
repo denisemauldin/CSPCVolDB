@@ -6,6 +6,11 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  rescue_from CanCan::AccessDenied do |exception|
+    Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
+    redirect_to root_path, :alert => exception.message
+  end
+  
    def access_denied(exception)
     redirect_to root_path, :alert => exception.message
   end
@@ -13,7 +18,7 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :member_number, :password, :password_confirmation, :remember_me) }
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :email, :member_number, :password, :remember_me) }
-    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :member_number, :password, :password_confirmation, :current_password) }
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :member_number, :role_ids, :password, :password_confirmation, :current_password) }
   end
   
   def authenticate_admin_user!
