@@ -20,3 +20,5 @@ public/*
 
 # Ignore config files
 config/database.yml
+
+*.ppr
