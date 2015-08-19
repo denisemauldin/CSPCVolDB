@@ -7,5 +7,17 @@
 one: {}
 # column: value
 #
-two: {}
-#  column: value
+vcd:
+  id: 1
+  name: vcd
+  desc: "Volunteer Core Director"
+  
+director:
+  id: 2
+  name: dir
+  desc: "Director"
+
+champion:
+  id: 5
+  name: champion
+  desc: "Champion"

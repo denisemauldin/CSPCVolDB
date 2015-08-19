@@ -3,6 +3,7 @@ require 'test_helper'
 class PositionsControllerTest < ActionController::TestCase
   setup do
     @position = positions(:one)
+    sign_in users(:admin)
   end
 
   test "should get index" do
@@ -18,7 +19,6 @@ class PositionsControllerTest < ActionController::TestCase
 
   test "should create position" do
     assert_difference('Position.count') do
-      puts @position.inspect
       post :create, position: { desc: @position.desc, name: @position.name, shadowing: @position.shadowing, training: @position.training }
     end
 

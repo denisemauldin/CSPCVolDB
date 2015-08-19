@@ -10,7 +10,9 @@ class PositionsController < ApplicationController
 
   # GET /positions/1
   # GET /positions/1.json
-  def show
+  def show  
+    @position = Position.find(params[:id])
+    @trainings = Position.trainings 
   end
 
   # GET /positions/new
@@ -21,6 +23,7 @@ class PositionsController < ApplicationController
 
   # GET /positions/1/edit
   def edit
+    @position = Position.find(params[:id])
     @trainings = Position.trainings
   end
 
@@ -28,7 +31,7 @@ class PositionsController < ApplicationController
   # POST /positions.json
   def create
     @position = Position.new(position_params)
-     @trainings = Position.trainings
+    @trainings = Position.trainings   
     respond_to do |format|
       if @position.save
         format.html { redirect_to @position, notice: 'Position was successfully created.' }
@@ -43,7 +46,6 @@ class PositionsController < ApplicationController
   # PATCH/PUT /positions/1
   # PATCH/PUT /positions/1.json
   def update
-    @trainings = Position.trainings
     respond_to do |format|
       if @position.update(position_params)
         format.html { redirect_to @position, notice: 'Position was successfully updated.' }
@@ -73,6 +75,6 @@ class PositionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def position_params
-      params.require(:position).permit(:name, :lead, :training, :shadowing, :desc)
+      params.require(:position).permit(:name, :training, :shadowing, :desc)
     end
 end

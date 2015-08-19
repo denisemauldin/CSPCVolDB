@@ -11,6 +11,7 @@ class Ability
     # user can edit their own information via the devise controller
     if user.has_any_role?({:name => :vcd, :name => :dir})
       can :manage, User
+      can :manage, Position
     end
 
 
