@@ -13,11 +13,12 @@ class ApplicationController < ActionController::Base
   protected
 
   rescue_from CanCan::AccessDenied do |exception|
-    Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
+    Rails.logger.error "Access denied on #{exception.action} #{exception.subject.inspect}"
     redirect_to root_path, :alert => exception.message
   end
   
    def access_denied(exception)
+    Rails.logger.error "Access denied on #{exception.action} #{exception.subject.inspect}"
     redirect_to root_path, :alert => exception.message
   end
 
@@ -28,10 +29,12 @@ class ApplicationController < ActionController::Base
   end
   
   def authenticate_admin_user!
+    Rails.logger.debug("current user try admin #{current_user.try(:admin?)}")
     raise SecurityError unless current_user.try(:admin?)
   end
   
   rescue_from SecurityError do |exception|
+    Rails.logger.debug("SecurityError redirected to root #{exception.inspect}")
     redirect_to root_url
   end
 end

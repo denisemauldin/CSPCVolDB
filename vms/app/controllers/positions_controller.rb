@@ -11,26 +11,22 @@ class PositionsController < ApplicationController
   # GET /positions/1
   # GET /positions/1.json
   def show  
-    @position = Position.find(params[:id])
     @trainings = Position.trainings 
   end
 
   # GET /positions/new
   def new
-    @position = Position.new
-    @trainings = Position.trainings
+     @trainings = Position.trainings
   end
 
   # GET /positions/1/edit
   def edit
-    @position = Position.find(params[:id])
     @trainings = Position.trainings
   end
 
   # POST /positions
   # POST /positions.json
   def create
-    @position = Position.new(position_params)
     @trainings = Position.trainings   
     respond_to do |format|
       if @position.save
@@ -68,11 +64,6 @@ class PositionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_position
-      @position = Position.find(params[:id])
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def position_params
       params.require(:position).permit(:name, :training, :shadowing, :desc)

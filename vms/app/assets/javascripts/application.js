@@ -12,5 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require recurring_select
 //= require_tree .
 
+// Have Recurring Select display weeks 1-5 for monthly
+$.fn.recurring_select.options = {
+  monthly: {
+    show_week: [true, true, true, true, true, false] //display week 1, 2 .... Last
+  }
+}                    

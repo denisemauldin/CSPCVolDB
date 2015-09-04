@@ -43,9 +43,10 @@ gem 'tzinfo-data'
 
 # Recurring Scheduling
 gem 'ice_cube'
-gem 'recurring_select'
+gem 'recurring_select'                            
+#gem 'schedule_attributes', :git => 'git://github.com/dgilperez/schedule_attributes.git'
 
 # can copy Devise views to app using: rails g devise:views
 gem 'devise'
-gem 'cancan'
+gem 'cancancan', '~> 1.10'
 gem 'rolify'
