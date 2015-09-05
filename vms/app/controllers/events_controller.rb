@@ -3,11 +3,9 @@ class EventsController < ApplicationController
   respond_to :html
 
   def index
-    respond_with(@events)
   end
 
   def show
-    respond_with(@event)
   end
 
   def new
@@ -15,51 +13,47 @@ class EventsController < ApplicationController
   end
 
   def edit
-    #@event.recurring_schedule = IceCube::Schedule.from_yaml(@event.recurring_schedule)
   end
 
   def create
-    Rails.logger.debug("create event is #{@event.inspect}")
-    if @event.save then
-      redirect_to events_url, notice: "Event successfully created"
-    else
-      redirect_to events_url, notice: "Event failed #{@event.inspect} #{@event.errors.messages.inspect}"
+    respond_to do |format|
+      if @event.save
+        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.json { render :show, status: :ok, location: @event }
+      else
+        format.html { render :edit }
+        format.json { render json: @event.errors, status: :unprocessable_entity }      
+      end
     end
-    #respond_with(@event)
   end
 
   def update
-    @event.update(event_params)
-    @event.save_schedule(params[:recurring_schedule])  
-    respond_with(@event)
+    respond_to do |format|
+      if @event.update(event_params)
+        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.json { render :show, status: :ok, location: @event }
+      else
+        format.html { render :edit }
+        format.json { render json: @event.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
-    authorize! :destroy, @event
-    begin
-      Rails.logger.debug("destorying event #{@event.inspect}")
-      @event.destroy
-      respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
-      format.json { head :no_content }
+    respond_to do |format|
+      if @event.destroy
+        format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
+        format.json { head :no_content }
+      else
+        format.html { render :edit }
+        format.json { render json: @event.errors, status: :unprocessable_entity}
+      end
     end
-    rescue Exception
-      flash[:error] = "Error destroying #{@event.inspect}"
-         respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event failed to be destroyed #{@event.inspect}.' }
-      format.json { head :no_content }
-    end
-    end
- 
   end
 
   private
- #   def set_event
- #     @event = Event.find(params[:id])
- #     Rails.logger.debug("set event to #{@event.inspect}")
- #   end
 
     def event_params
-      params.require(:event).permit(:name, :abbv, :start, :duration, :default_location, :recurring_schedule)
+      params.require(:event).permit(:id, :name, :abbv, :start, :duration, :default_location, :recurring_schedule)
     end
 end

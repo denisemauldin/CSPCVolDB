@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  resources :events
+  
   devise_for :users
   root 'pages#home'
   resources :positions
+  resources :events
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -5,7 +5,7 @@ class PositionsController < ApplicationController
   # GET /positions
   # GET /positions.json
   def index
-    @positions = Position.all
+    
   end
 
   # GET /positions/1

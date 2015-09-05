@@ -18,10 +18,10 @@ class Event < ActiveRecord::Base
   
   def recurring_rule
     if self.schedule_yaml.nil? then
-      Rails.logger.debug("setting schedule to nil")
+      Rails.logger.debug("recurring_rule setting schedule to nil")
       return IceCube::Schedule.new(self.start)
     else
-      Rails.logger.debug("schedule_yaml #{schedule_yaml.inspect}")
+      Rails.logger.debug("recurring_rule schedule_yaml #{schedule_yaml.inspect}")
       value = IceCube::Schedule.from_yaml(self.schedule_yaml)
       Rails.logger.debug("value #{value.inspect}")
       return value
@@ -29,22 +29,21 @@ class Event < ActiveRecord::Base
   end  
   
   def recurring_schedule
-    Rails.logger.debug("event called recurring_schedule #{self.inspect}")
+    Rails.logger.debug("recurring_schedule #{self.inspect}")
     if self.schedule_yaml.nil? then
       Rails.logger.debug("setting schedule to nil")
       return IceCube::Schedule.new(self.start)
     else
-      Rails.logger.debug("schedule_yaml #{schedule_yaml.inspect}")
+      Rails.logger.debug("recurring_schedule schedule_yaml #{schedule_yaml.inspect}")
       value = IceCube::Schedule.from_yaml(self.schedule_yaml)
-      Rails.logger.debug("value #{value.inspect}")
+      Rails.logger.debug("recurring_schedule value #{value.inspect}")
       rule = value.recurrence_rules.first
-      Rails.logger.debug("rule #{rule.inspect}")      
+      Rails.logger.debug("recurring_schedule rule #{rule.inspect}")      
       return rule.to_hash 
     end
   end
         
   def non_recurring_rule; 1; end
-  def persisted?; false; end
 end
 
 
