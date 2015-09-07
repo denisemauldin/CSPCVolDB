@@ -1,6 +1,8 @@
 class Event < ActiveRecord::Base
   include IceCube
   
+  belongs_to :calendar
+  
   validates :name, :presence => true
   validates :schedule_yaml, :presence => true
 

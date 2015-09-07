@@ -23,7 +23,7 @@ class EventsControllerTest < ActionController::TestCase
       post :create, event: { abbv: @event.abbv, default_location: @event.default_location, duration: @event.duration, name: @event.name, start: @event.start, recurring_schedule:  "{\"validations\":{\"day_of_week\":{\"1\":[2]}},\"rule_type\":\"IceCube::MonthlyRule\",\"interval\":1}" }
     end
 
-    assert_redirected_to events_path
+    assert_redirected_to event_path(assigns(:event))
   end
 
   test "should show event" do

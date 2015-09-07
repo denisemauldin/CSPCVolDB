@@ -6,8 +6,18 @@ one:
   start: 2015-08-22 17:14:50
   duration: 360
   default_location: 1
-  schedule_yaml: "---\n:start_time: 2015-09-03 23:28:57.000000000 -07:00\n:start_date: 2015-09-03 23:28:57.000000000 -07:00\n:rrules:\n- :validations:\n    :day_of_week:\n   1:\n      - 2\n  :rule_type: IceCube::MonthlyRule\n  :interval: 1\n:rtimes: []\n:extimes: []\n"
-
+  schedule_yaml: "---
+:start_time: 2015-09-05 00:56:30.000000000 -07:00
+:start_date: 2015-09-05 00:56:30.000000000 -07:00
+:rrules:
+- :validations:
+    :day_of_week:
+      1:
+      - 2
+  :rule_type: IceCube::MonthlyRule
+  :interval: 1
+:rtimes: []
+:extimes: []"
 #recurring_schedule: "{\"validations\":{\"day_of_week\":{\"1\":[2]}},\"rule_type\":\"IceCube::MonthlyRule\",\"interval\":1}"    
 
 two:
@@ -16,6 +26,18 @@ two:
   start: 2015-08-22 17:14:50
   duration: 480
   default_location: 1
-  schedule_yaml: "---\n:start_time: 2015-09-03 23:14:00.000000000 -07:00\n:start_date: 2015-09-03 23:14:00.000000000 -07:00\n:rrules:\n- :validations:\n    :day_of_week:\n   5:\n      - 2\n  :rule_type: IceCube::MonthlyRule\n  :interval: 1\n:rtimes: []\n:extimes: []\n"
-
+  schedule_yaml: "---
+:start_time: 2015-09-05 00:56:30.000000000 -07:00
+:start_date: 2015-09-05 00:56:30.000000000 -07:00
+:rrules:
+- :validations:
+    :day_of_week:
+      5:
+      - 2
+  :rule_type: IceCube::MonthlyRule
+  :interval: 1
+:rtimes: []
+:extimes: []
+" 
+#"---\n:start_time: 2015-09-03 23:14:00.000000000 -07:00\n:start_date: 2015-09-03 23:14:00.000000000 -07:00\n:rrules:\n- :validations:\n    :day_of_week:\n   5:\n      - 2\n  :rule_type: IceCube::MonthlyRule\n  :interval: 1\n:rtimes: []\n:extimes: []\n"
 #recurring_schedule: "{\"validations\":{\"day_of_week\":{\"5\":[2]}},\"rule_type\":\"IceCube::MonthlyRule\",\"interval\":1}" 

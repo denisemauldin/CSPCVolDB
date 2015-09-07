@@ -44,7 +44,10 @@ gem 'tzinfo-data'
 # Recurring Scheduling
 gem 'ice_cube'
 gem 'recurring_select'                            
-#gem 'schedule_attributes', :git => 'git://github.com/dgilperez/schedule_attributes.git'
+# https://github.com/bokmann/fullcalendar-rails
+gem 'momentjs-rails'
+gem 'fullcalendar-rails'
+gem 'jquery-minicolors-rails'
 
 # can copy Devise views to app using: rails g devise:views
 gem 'devise'

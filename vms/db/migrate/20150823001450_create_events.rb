@@ -6,6 +6,7 @@ class CreateEvents < ActiveRecord::Migration
       t.time :start
       t.integer :duration
       t.integer :default_location
+      t.references :calendar
       t.text :schedule_yaml
 
       t.timestamps

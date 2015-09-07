@@ -11,7 +11,7 @@ class RolifyCreateRoles < ActiveRecord::Migration
     create_table(:users_roles) do |t|
       t.references :user
       t.references :role
-      t.integer :party_id
+      t.references :event
       t.integer :added_by_id
       t.timestamps
     end
@@ -19,6 +19,6 @@ class RolifyCreateRoles < ActiveRecord::Migration
     add_index(:roles, :name)
     add_index(:roles, [ :name, :resource_type, :resource_id ])
     add_index(:users_roles, [ :user_id, :role_id ])
-    add_index(:users_roles, [ :user_id, :role_id, :party_id ])
+    add_index(:users_roles, [ :user_id, :role_id, :event_id ])
    end
 end

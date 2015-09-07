@@ -37,4 +37,9 @@ class ApplicationController < ActionController::Base
     Rails.logger.debug("SecurityError redirected to root #{exception.inspect}")
     redirect_to root_url
   end
+  
+ # rescue_from StandardError do |exception|
+ #   Rails.logger.debug("StandardError #{exception.inspect}")
+ #   redirect_to root_url
+ # end
 end

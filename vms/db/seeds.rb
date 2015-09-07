@@ -49,5 +49,30 @@ Role.create(name: "team_lead", desc: "Team Lead")
 Role.create(name: "champion", desc: "Champion")
 Role.create(name: "ec", desc: "Event Coordinator")
 
+User.create(username: "Admin", email: "admin@example.com", member_number: "1", password: "password")
+
 u = User.find(1)
 u.add_role(:dir)
+
+Calendar.create(id: 1, name: "CSPC", description: "Calendar for the Center for Sex Positive Culture in Seattle, WA.", color: "#8911d9")
+Calendar.create(id: 2, name: "FSPC", description: "Calendar for the Foundation for Sex Positive Culture in Seattle, WA.", color: "#940a3b")
+
+Event.create(
+  name: "Rough and Tumble",
+  abbv: "RnT",
+  start: "2015-08-22 17:14:50",
+  duration: 360,
+  default_location: 1,
+  calendar_id: 1,
+  schedule_yaml: "---
+:start_time: 2015-09-05 00:56:30.000000000 -07:00
+:start_date: 2015-09-05 00:56:30.000000000 -07:00
+:rrules:
+- :validations:
+    :day_of_week:
+      1:
+      - 2
+  :rule_type: IceCube::MonthlyRule
+  :interval: 1
+:rtimes: []
+:extimes: []")

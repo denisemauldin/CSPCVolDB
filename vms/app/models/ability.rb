@@ -14,6 +14,7 @@ class Ability
       Rails.logger.error("user #{user.inspect} has roles vcd or dir #{user.roles.inspect}")
       can :manage, :all
       can :manage, Event
+      can :manage, Calendar
     end
 
 

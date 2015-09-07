@@ -11,8 +11,11 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.minicolors
 //= require jquery_ujs
 //= require recurring_select
+//= require moment
+//= require fullcalendar
 //= require_tree .
 
 // Have Recurring Select display weeks 1-5 for monthly
