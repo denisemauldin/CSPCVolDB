@@ -6,9 +6,11 @@ class Event < ActiveRecord::Base
   validates :name, :presence => true
   validates :schedule_yaml, :presence => true
 
+  scope :calendar, -> (calendar_id) { where calendar_id: calendar_id }
+
   def recurring_schedule=(ruleHash)
     if ruleHash.match("{}") then
-        self.schedule_yaml = IceCube::Schedule.new(self.start).to_yaml
+        self.schedule_yaml = IceCube::Schedule.new.to_yaml
     end  
     if RecurringSelect.is_valid_rule?(ruleHash) then
       ics = IceCube::Schedule.new
@@ -21,7 +23,7 @@ class Event < ActiveRecord::Base
   def recurring_rule
     if self.schedule_yaml.nil? then
       Rails.logger.debug("recurring_rule setting schedule to nil")
-      return IceCube::Schedule.new(self.start)
+      return IceCube::Schedule.new
     else
       Rails.logger.debug("recurring_rule schedule_yaml #{schedule_yaml.inspect}")
       value = IceCube::Schedule.from_yaml(self.schedule_yaml)
@@ -34,7 +36,7 @@ class Event < ActiveRecord::Base
     Rails.logger.debug("recurring_schedule #{self.inspect}")
     if self.schedule_yaml.nil? then
       Rails.logger.debug("setting schedule to nil")
-      return IceCube::Schedule.new(self.start)
+      return IceCube::Schedule.new
     else
       Rails.logger.debug("recurring_schedule schedule_yaml #{schedule_yaml.inspect}")
       value = IceCube::Schedule.from_yaml(self.schedule_yaml)

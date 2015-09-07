@@ -60,7 +60,7 @@ Calendar.create(id: 2, name: "FSPC", description: "Calendar for the Foundation f
 Event.create(
   name: "Rough and Tumble",
   abbv: "RnT",
-  start: "2015-08-22 17:14:50",
+  open_time: "18:00:00",
   duration: 360,
   default_location: 1,
   calendar_id: 1,

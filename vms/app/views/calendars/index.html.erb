@@ -1,0 +1,12 @@
+<div>
+  <div id="calendar-div">
+    <h4>Currently: <%= Time.now.strftime("%v %r") %></h4>
+    <div id="calendar" class="fc"></div>
+  </div>
+  <div id="sidebar">
+    <%= render 'picker' %>
+  </div>
+</div>
+<div id="list">
+ <%= render "list" %>
+</div>

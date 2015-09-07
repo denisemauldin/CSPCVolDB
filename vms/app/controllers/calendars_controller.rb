@@ -10,6 +10,8 @@ class CalendarsController < ApplicationController
       format.json { render json: @calendars }
     end    
   end
+  
+
 
   def show
     respond_with(@calendar)

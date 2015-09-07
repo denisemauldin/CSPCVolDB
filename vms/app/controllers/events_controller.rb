@@ -10,6 +10,44 @@ class EventsController < ApplicationController
     end    
   end
 
+  def calendar_events
+#    @calendars = params[:id]? Calendar.find(params[:ids]): Calendar.all
+#    @calendars.each do |calendar|
+#      calendar.events.each do |event|
+#      
+#        Rails.logger.debug("event #{event.inspect}")
+#      end
+#    end
+    # expects to have a start and end date passed
+    if params[:start].present? and params[:end].present? then
+      @events = Event.where(nil)
+      @events = @events.calendar(params[:calendar_ids]) if params[:calendar_ids].present?
+      @dates = @events.collect{ |event| 
+        { title: event.name, date: IceCube::Schedule.from_yaml(event.schedule_yaml).occurrences_between(params[:start].to_time, params[:end].to_time) }  
+      }
+     # @events.each do |event|
+     #   Rails.logger.debug("event #{event.inspect}")
+     #   ics = IceCube::Schedule.from_yaml(event.schedule_yaml)
+     #   date = ics.occurrences_between(params[:start].to_time, params[:end].to_time) 
+     #   if date.present? then
+     #     
+     #   end        
+     # end
+     Rails.logger.debug("dates #{@dates.inspect}")
+      Rails.logger.debug("calendars_controller events #{@events.inspect}")
+      respond_to do |format|
+        format.json { render json: @events }
+      end
+    else
+      @event = Event.new
+      @event.errors.add(:base, "calendar_events requires :start and :end parameters")
+      Rails.logger.debug("calendar_events requires :start and :end parameters #{@event.inspect}")
+      respond_to do |format|
+        format.json { render :json => { :errors => @event.errors.full_messages }, :status => 422 }
+      end
+    end    
+  end
+
   def show
   end
 
@@ -59,6 +97,6 @@ class EventsController < ApplicationController
   private
 
     def event_params
-      params.require(:event).permit(:id, :name, :abbv, :start, :duration, :default_location, :recurring_schedule)
+      params.require(:event).permit(:id, :name, :abbv, :open_time, :duration, :default_location, :recurring_schedule)
     end
 end

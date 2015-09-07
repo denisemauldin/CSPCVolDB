@@ -20,8 +20,8 @@
     <%= f.text_field :abbv %>
   </div>
   <div class="field">
-    <%= f.label :start %><br>
-    <%= f.time_select :start %>
+    <%= f.label :open_time %><br>
+    <%= f.time_select :open_time, :ignore_date => true %>
   </div>
   <div class="field">
     <%= f.label :duration %><br>
