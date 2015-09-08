@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
   
   validates :name, :presence => true
   validates :schedule_yaml, :presence => true
+  validates :calendar_id, :presence => true
 
   scope :calendar, -> (calendar_id) { where calendar_id: calendar_id }
 
@@ -13,8 +14,13 @@ class Event < ActiveRecord::Base
         self.schedule_yaml = IceCube::Schedule.new.to_yaml
     end  
     if RecurringSelect.is_valid_rule?(ruleHash) then
+      Rails.logger.debug("recurring_schedule= self #{self.inspect}")
       ics = IceCube::Schedule.new
-      ics.add_recurrence_rule(RecurringSelect.dirty_hash_to_rule(ruleHash))
+      ics.start_time = self.open_time
+      ics.start_date = self.open_time
+      rule = RecurringSelect.dirty_hash_to_rule(ruleHash)
+      Rails.logger.debug("recurring_schedule= rule #{rule.inspect}")
+      ics.add_recurrence_rule(rule)
       Rails.logger.debug("recurring_schedule= ics #{ics.inspect}")
       self.schedule_yaml = ics.to_yaml
     end  
@@ -46,6 +52,28 @@ class Event < ActiveRecord::Base
       return rule.to_hash 
     end
   end
+    
+  def calendar_item(date_start, date_end)
+    items = Array.new
+    IceCube::Schedule.from_yaml(self.schedule_yaml).occurrences_between(date_start.to_time, date_end.to_time).each do |date|
+      Rails.logger.debug("calendar_item date #{date.inspect}")
+      item = { 
+          title: name, 
+          date: date,
+          url: Rails.application.routes.url_helpers.event_path(self),
+          color: self.calendar.color,
+          start: date,
+          end:  date + self.duration.minutes,
+          event_id: id,
+          textColor: "black"                                       
+        }
+      Rails.logger.debug("calendar_itme item #{item.inspect}")
+     items << item    
+    end
+    Rails.logger.debug("calendar_item items #{items.inspect}")
+    return items    
+    
+  end   
         
   def non_recurring_rule; 1; end
 end

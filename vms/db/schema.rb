@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20150906201400) do
   create_table "events", force: true do |t|
     t.string   "name"
     t.string   "abbv"
-    t.time     "open_time"
+    t.time   "open_time"
     t.integer  "duration"
     t.integer  "default_location"
     t.integer  "calendar_id"

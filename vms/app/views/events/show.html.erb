@@ -10,12 +10,23 @@
 
 <p>
   <strong>Open Time:</strong>
-  <%= @event.open_time %>
+  <%= @event.open_time.strftime("%I:%M %p") %>
 </p>
+
+<p>
+  <strong>Close Time:</strong>
+  <%= (@event.open_time+ @event.duration.minutes).strftime("%I:%M %p") %>
+</p>
+
 
 <p>
   <strong>Duration:</strong>
   <%= @event.duration %>
+</p>
+
+<p>
+  <strong>Calendar:</strong>
+  <%= @event.calendar.name %>
 </p>
 
 <p>

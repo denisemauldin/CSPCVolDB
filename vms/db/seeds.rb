@@ -65,8 +65,8 @@ Event.create(
   default_location: 1,
   calendar_id: 1,
   schedule_yaml: "---
-:start_time: 2015-09-05 00:56:30.000000000 -07:00
-:start_date: 2015-09-05 00:56:30.000000000 -07:00
+:start_time: 2015-09-05 18:00:00.000000000 -07:00
+:start_date: 2015-09-05 18:00:00.000000000 -07:00
 :rrules:
 - :validations:
     :day_of_week:

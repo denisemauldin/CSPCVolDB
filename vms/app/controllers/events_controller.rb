@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
-  respond_to :html
+  respond_to :html, :json
 
   def index
      @events = Event.all
@@ -22,9 +22,7 @@ class EventsController < ApplicationController
     if params[:start].present? and params[:end].present? then
       @events = Event.where(nil)
       @events = @events.calendar(params[:calendar_ids]) if params[:calendar_ids].present?
-      @dates = @events.collect{ |event| 
-        { title: event.name, date: IceCube::Schedule.from_yaml(event.schedule_yaml).occurrences_between(params[:start].to_time, params[:end].to_time) }  
-      }
+      @dates = @events.collect { |event|  event.calendar_item(params[:start], params[:end]) }.flatten()
      # @events.each do |event|
      #   Rails.logger.debug("event #{event.inspect}")
      #   ics = IceCube::Schedule.from_yaml(event.schedule_yaml)
@@ -36,7 +34,7 @@ class EventsController < ApplicationController
      Rails.logger.debug("dates #{@dates.inspect}")
       Rails.logger.debug("calendars_controller events #{@events.inspect}")
       respond_to do |format|
-        format.json { render json: @events }
+        format.json { render json: @dates }
       end
     else
       @event = Event.new
@@ -97,6 +95,6 @@ class EventsController < ApplicationController
   private
 
     def event_params
-      params.require(:event).permit(:id, :name, :abbv, :open_time, :duration, :default_location, :recurring_schedule)
+      params.require(:event).permit(:id, :name, :abbv, :open_time, :duration, :default_location, :recurring_schedule, :calendar_id)
     end
 end

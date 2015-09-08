@@ -5,12 +5,11 @@
 class App
   reload_calendar: ->
     source = new Array
-    viewable_calendars = $('input:checkbox:checked.visable_calendars').map(->
+    viewable_calendars = $('input:checkbox:checked.visible_calendars').map(->
       @value
     ).get().join(',')
-    #calendar_url = '/event_instances.json?calendar_ids=' + viewable_calendars
-    calendar_url = '/events.json'
-    new_event_link = '#{new_event_path}'
+    calendar_url = '/calendar_events.json?calendar_ids='+ viewable_calendars
+    new_event_link = '/events/new'
     $('#calendar').fullCalendar
       dayClick: (date, allDay, jsEvent, view) ->
         document.location.href = new_event_link + '?start_date=' + date
@@ -36,7 +35,12 @@ class App
           return
       } ]
       eventResize: @eventDropOrResize
-      timeFormat: 'h:mmtt{ - h:mmtt} '
+      timeFormat: 'h:mmt'
+      displayEventEnd: {
+                        month: true,
+                        basicWeek: true,
+                        "default": true
+                        }
     return
 
 app = new App
