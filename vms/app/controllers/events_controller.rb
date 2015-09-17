@@ -18,30 +18,37 @@ class EventsController < ApplicationController
 #        Rails.logger.debug("event #{event.inspect}")
 #      end
 #    end
-    # expects to have a start and end date passed
-    if params[:start].present? and params[:end].present? then
-      @events = Event.where(nil)
-      @events = @events.calendar(params[:calendar_ids]) if params[:calendar_ids].present?
-      @dates = @events.collect { |event|  event.calendar_item(params[:start], params[:end]) }.flatten()
-     # @events.each do |event|
-     #   Rails.logger.debug("event #{event.inspect}")
-     #   ics = IceCube::Schedule.from_yaml(event.schedule_yaml)
-     #   date = ics.occurrences_between(params[:start].to_time, params[:end].to_time) 
-     #   if date.present? then
-     #     
-     #   end        
-     # end
-     Rails.logger.debug("dates #{@dates.inspect}")
-      Rails.logger.debug("calendars_controller events #{@events.inspect}")
+    if params[:calendar_ids] == 'empty' then
       respond_to do |format|
-        format.json { render json: @dates }
+        format.json { render json: [] }
       end
     else
-      @event = Event.new
-      @event.errors.add(:base, "calendar_events requires :start and :end parameters")
-      Rails.logger.debug("calendar_events requires :start and :end parameters #{@event.inspect}")
-      respond_to do |format|
-        format.json { render :json => { :errors => @event.errors.full_messages }, :status => 422 }
+      Rails.logger.debug("called calendar_events with #{params.inspect}")
+      # expects to have a start and end date passed
+      if params[:start].present? and params[:end].present? then
+        @events = Event.where(nil)
+        @events = @events.where(:calendar_id => params[:calendar_ids].split(',')) if params[:calendar_ids].present?
+        @dates = @events.collect { |event|  event.calendar_item(params[:start], params[:end]) }.flatten()
+       # @events.each do |event|
+       #   Rails.logger.debug("event #{event.inspect}")
+       #   ics = IceCube::Schedule.from_yaml(event.schedule_yaml)
+       #   date = ics.occurrences_between(params[:start].to_time, params[:end].to_time) 
+       #   if date.present? then
+       #     
+       #   end        
+       # end
+       Rails.logger.debug("dates #{@dates.inspect}")
+        Rails.logger.debug("calendars_controller events #{@events.inspect}")
+        respond_to do |format|
+          format.json { render json: @dates }
+        end
+      else
+        @event = Event.new
+        @event.errors.add(:base, "calendar_events requires :start and :end parameters")
+        Rails.logger.debug("calendar_events requires :start and :end parameters #{@event.inspect}")
+        respond_to do |format|
+          format.json { render :json => { :errors => @event.errors.full_messages }, :status => 422 }
+        end
       end
     end    
   end

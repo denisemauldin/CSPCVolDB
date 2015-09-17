@@ -4,11 +4,14 @@
 
 class App
   reload_calendar: ->
-    source = new Array
     viewable_calendars = $('input:checkbox:checked.visible_calendars').map(->
       @value
     ).get().join(',')
+    console.log("viewable_calendars",viewable_calendars)
+    unless viewable_calendars
+      viewable_calendars = 'empty'                              
     calendar_url = '/calendar_events.json?calendar_ids='+ viewable_calendars
+    console.log("calendar_url",calendar_url)
     new_event_link = '/events/new'
     $('#calendar').fullCalendar
       dayClick: (date, allDay, jsEvent, view) ->
@@ -28,8 +31,7 @@ class App
       eventSources: [ {
         url: calendar_url
         data:
-          custom_param1: 'something'
-          custom_param2: 'somethingelse'
+          custom_param1: viewable_calendars
         error: ->
           alert 'there was an error while fetching events!'
           return
@@ -43,7 +45,7 @@ class App
                         }
     return
 
-app = new App
+window.app = new App
 $(document).ready ->
   app.reload_calendar()
   $('#calendar-color').minicolors()
