@@ -4,14 +4,6 @@
 
 class App
   reload_calendar: ->
-    viewable_calendars = $('input:checkbox:checked.visible_calendars').map(->
-      @value
-    ).get().join(',')
-    console.log("viewable_calendars",viewable_calendars)
-    unless viewable_calendars
-      viewable_calendars = 'empty'                              
-    calendar_url = '/calendar_events.json?calendar_ids='+ viewable_calendars
-    console.log("calendar_url",calendar_url)
     new_event_link = '/events/new'
     $('#calendar').fullCalendar
       dayClick: (date, allDay, jsEvent, view) ->
@@ -28,14 +20,6 @@ class App
       select: @select
       eventClick: @eventClick
       eventDrop: @eventDropOrResize
-      eventSources: [ {
-        url: calendar_url
-        data:
-          custom_param1: viewable_calendars
-        error: ->
-          alert 'there was an error while fetching events!'
-          return
-      } ]
       eventResize: @eventDropOrResize
       timeFormat: 'h:mmt'
       displayEventEnd: {
@@ -43,9 +27,22 @@ class App
                         basicWeek: true,
                         "default": true
                         }
+    calendar_url = '/calendar_events.json?calendar_ids='
+    $('input:checkbox:checked.visible_calendars').map(->
+      console.log("adding calendar to eventSource "+calendar_url+@value)
+      $('#calendar').fullCalendar('addEventSource',calendar_url+@value)
+    )
     return
 
+window.toggleCalendar = (cb, calendar_id) ->
+  if cb.checked == true
+    $('#calendar').fullCalendar('addEventSource','/calendar_events.json?calendar_ids='+calendar_id)
+  else
+    $('#calendar').fullCalendar('removeEventSource','/calendar_events.json?calendar_ids='+calendar_id)   
+  return
+    
 window.app = new App
+
 $(document).ready ->
   app.reload_calendar()
   $('#calendar-color').minicolors()

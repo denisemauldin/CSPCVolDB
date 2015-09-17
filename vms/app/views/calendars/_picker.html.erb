@@ -2,8 +2,10 @@
 <% @calendars.each do |c| %>
   <li>
     <span style="background-color: <%= c.color %>;">
-      <%= check_box_tag 'show_calendar_'+c.id.to_s, value=c.id.to_s, checked=true, :onchange => "app.reload_calendar(); $('#calendar').fullCalendar('refetchResources')", :class => "visible_calendars" %>
-    </span>
+      <%= check_box_tag 'show_calendar_'+c.id.to_s, value=c.id.to_s, checked=true, 
+          :onchange => "toggleCalendar(this,"+c.id.to_s+ ");", 
+          :class => "visible_calendars" %>
+    </span>                                                                                                                                               
     <%= c.name %>
     <%= link_to 'x', calendar_path(c), :confirm => "Are you sure you want to remove the calendar?", :method => :delete %></li>
 <% end %>
