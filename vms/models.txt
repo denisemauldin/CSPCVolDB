@@ -1,0 +1,53 @@
+* Calendars are the calendar of events for a particular organization
+* Events are a gathering of people to do something.
+* Locations are where the events happen.
+* Offers are people volunteering to work a schedule
+* Positions are various activities people volunteer to do at an event.
+* Qualifications are which users are qualified to work which positions
+* Roles define responsibilities and privleges on the website
+* Schedules are what events have which people signed up for which positions at a 
+    particular date/time - there are many schedule entries per event
+* Shifts are start and end times for positions
+* Staff is which event has which positions available and any permanent positions
+* Users are volunteers for positions.
+
+Staff is the 'default' information for a party in general.
+Schedule is the 'actual' information for a particular party instance.
+
+------------------------------------------------------------------------------------
+
+A calendar has many events.
+
+An event has one calendar
+An event has one default location
+An event has many users through schedules through offers
+An event has many staffs
+
+A location has many events
+
+An offer has one user
+An offer has one schedule
+
+A position has many users through qualifications
+A position has many schedules through staffs
+
+A qualification has one user
+A qualificatio has one position
+
+A role has many users through users_roles
+
+A schedule has one event through staffs
+A schedule has one position
+A schedule has one shift
+A schedule has one location
+
+A shift has many staffs
+
+A staff has one event
+A staff has one position
+A staff has one shift
+A staff has one location 
+  
+A user has many roles through user_roles.
+A user has many schedules through 
+  

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event_id: 
+  role_id: 
+  shift_id: 
+  permanent_user: 1
+
+two:
+  event_id: 
+  role_id: 
+  shift_id: 
+  permanent_user: 1

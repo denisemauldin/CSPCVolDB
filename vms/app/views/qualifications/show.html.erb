@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @qualification.user %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @qualification.position %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @qualification.status %>
+</p>
+
+<p>
+  <strong>Count:</strong>
+  <%= @qualification.count %>
+</p>
+
+<%= link_to 'Edit', edit_qualification_path(@qualification) %> |
+<%= link_to 'Back', qualifications_path %>
