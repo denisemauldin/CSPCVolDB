@@ -23,7 +23,7 @@
         <td><%= event.duration %></td>
         <td><%= event.calendar.name %></td>
         <td><%= event.default_location %></td>
-        <td><%= event.recurring_rule.to_s %></td>
+        <td><%= event.recurring_schedule.to_s %></td>
         <td><%= link_to 'Show', event_path(event) %></td>
         <td><% if can?(:edit, event) %><%= link_to 'Edit', edit_event_path(event) %><% end %></td>
         <td><% if can?(:destroy, event) %><%= link_to 'Destroy',  event_path(:id => event.id) , method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>

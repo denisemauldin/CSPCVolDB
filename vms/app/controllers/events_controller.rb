@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
+  skip_authorize_resource :only => :calendar_events
   respond_to :html, :json
 
   def index
@@ -11,34 +12,16 @@ class EventsController < ApplicationController
   end
 
   def calendar_events
-#    @calendars = params[:id]? Calendar.find(params[:ids]): Calendar.all
-#    @calendars.each do |calendar|
-#      calendar.events.each do |event|
-#      
-#        Rails.logger.debug("event #{event.inspect}")
-#      end
-#    end
     if params[:calendar_ids] == 'empty' then
       respond_to do |format|
         format.json { render json: [] }
       end
     else
-      Rails.logger.debug("called calendar_events with #{params.inspect}")
       # expects to have a start and end date passed
       if params[:start].present? and params[:end].present? then
         @events = Event.where(nil)
         @events = @events.where(:calendar_id => params[:calendar_ids].split(',')) if params[:calendar_ids].present?
         @dates = @events.collect { |event|  event.calendar_item(params[:start], params[:end]) }.flatten()
-       # @events.each do |event|
-       #   Rails.logger.debug("event #{event.inspect}")
-       #   ics = IceCube::Schedule.from_yaml(event.schedule_yaml)
-       #   date = ics.occurrences_between(params[:start].to_time, params[:end].to_time) 
-       #   if date.present? then
-       #     
-       #   end        
-       # end
-       Rails.logger.debug("dates #{@dates.inspect}")
-        Rails.logger.debug("calendars_controller events #{@events.inspect}")
         respond_to do |format|
           format.json { render json: @dates }
         end
@@ -102,6 +85,6 @@ class EventsController < ApplicationController
   private
 
     def event_params
-      params.require(:event).permit(:id, :name, :abbv, :open_time, :duration, :default_location, :recurring_schedule, :calendar_id)
+      params.require(:event).permit(:id, :name, :abbv, :open_time, :duration, :default_location, :recurring_rule, :calendar_id)
     end
 end

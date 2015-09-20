@@ -9,7 +9,11 @@ class User < ActiveRecord::Base
     :presence => true,
     :uniqueness => { :case_sensitive => false }
     
-  has_and_belongs_to_many :positions
+  has_many :positions, through: :qualifications
+  has_many :permanent_positions, through: :staffs, :foreign_key => :permanent_user
+  has_many :schedules, through: :offers
+  has_many :events, through: :schedules
+   
   
    def after_sign_in_path_for(user)
     user.admin? ? admin_dashboard_path : root_path 

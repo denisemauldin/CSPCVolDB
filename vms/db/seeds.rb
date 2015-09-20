@@ -49,16 +49,24 @@ Role.create(name: "team_lead", desc: "Team Lead")
 Role.create(name: "champion", desc: "Champion")
 Role.create(name: "ec", desc: "Event Coordinator")
 
-User.create(username: "Admin", email: "admin@example.com", member_number: "1", password: "password")
+User.create!(id: 1, username: "Admin", email: "admin@example.com", member_number: "1", password: "password")
+User.create!(id: 2, username: "DeeLiz", email: "gcdenise@yahoo.com", member_number: "14074", password: "testing1")
 
 u = User.find(1)
 u.add_role(:dir)
+
+u = User.find(2)
+u.add_role(:champion)
+u.add_role(:ec)
+
+ec = Position.find_by_name("Event Coordinator")
+Qualification.create(user_id: 2, position_id: ec.id, status: "Good", count: 392)
 
 Calendar.create(id: 1, name: "CSPC", description: "Calendar for the Center for Sex Positive Culture in Seattle, WA.", color: "#8911d9")
 Calendar.create(id: 2, name: "FSPC", description: "Calendar for the Foundation for Sex Positive Culture in Seattle, WA.", color: "#940a3b")
 
 Event.create(
-  name: "Rough and Tumble",
+  name: "Rough and Tumble Dojo",
   abbv: "RnT",
   open_time: "18:00:00",
   duration: 360,
@@ -75,4 +83,23 @@ Event.create(
   :rule_type: IceCube::MonthlyRule
   :interval: 1
 :rtimes: []
-:extimes: []")
+:extimes: []
+")
+
+Location.create(name: "Main Space", description: "The main space of the Center for Sex Positive Culture.")
+
+Shift.create(start: "18:00", duration: "360") # starts at 6pm, 6 hours long, ends at midnight
+Shift.create(start: "18:00", duration: "180") # starts at 6pm, 3 hours long, ends at 9pm
+Shift.create(start: "21:00", duration: "180") # starts at 9pm, 3 hours long, ends at midnight
+
+Staff.create(event_id: 1, position_id: ec.id, shift_id: 1, permanent_user: 2) # all shift EC
+Staff.create(event_id: 1, position_id: 1, shift_id: 2, permanent_user: "")  # first shift cashier
+Staff.create(event_id: 1, position_id: 1, shift_id: 3, permanent_user: "")  # second shift cashier
+
+rnt = Event.find(1)
+Schedule.create(date: rnt.recurring_schedule.next_occurrence(), location_id: 1, staff_id: 1)  
+
+Offer.create(user_id: 2, schedule_id: 1, accepted: 1, accepted_timestamp: "2015-09-20 18:02:00 -07:00", accepted_user_id: 1)
+s = Schedule.find(1)
+s.offer_id = 1
+s.save

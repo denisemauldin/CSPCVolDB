@@ -7,6 +7,7 @@ class Ability
     # default abilities
     can :read, Position
     can :read, Event
+    can :read, Calendar
     
     # this is the admin's way to add roles
     # user can edit their own information via the devise controller

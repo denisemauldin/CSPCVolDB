@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
   
+  resources :offers
+
+  resources :qualifications
+
+  resources :locations
+  resources :schedules
+  resources :staffs
+  resources :shifts
   resources :calendars
   devise_for :users
   root 'pages#home'

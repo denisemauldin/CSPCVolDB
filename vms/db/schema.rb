@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150906201400) do
+ActiveRecord::Schema.define(version: 20150920094924) do
 
   create_table "calendars", force: true do |t|
     t.string   "name"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20150906201400) do
   create_table "events", force: true do |t|
     t.string   "name"
     t.string   "abbv"
-    t.time   "open_time"
+    t.time     "open_time"
     t.integer  "duration"
     t.integer  "default_location"
     t.integer  "calendar_id"
@@ -32,6 +32,28 @@ ActiveRecord::Schema.define(version: 20150906201400) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "locations", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "offers", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "schedule_id"
+    t.integer  "accepted"
+    t.datetime "accepted_timestamp"
+    t.integer  "accepted_user_id"
+    t.integer  "revoked"
+    t.datetime "revoke_timestamp"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "offers", ["schedule_id"], name: "index_offers_on_schedule_id", using: :btree
+  add_index "offers", ["user_id"], name: "index_offers_on_user_id", using: :btree
 
   create_table "positions", force: true do |t|
     t.string   "name"
@@ -42,16 +64,17 @@ ActiveRecord::Schema.define(version: 20150906201400) do
     t.datetime "updated_at"
   end
 
-  create_table "positions_users", id: false, force: true do |t|
-    t.integer  "position_id",    null: false
-    t.integer  "user_id",        null: false
-    t.integer  "approved_by_id"
+  create_table "qualifications", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "position_id"
+    t.string   "status"
+    t.integer  "count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "positions_users", ["position_id"], name: "index_positions_users_on_position_id", using: :btree
-  add_index "positions_users", ["user_id"], name: "index_positions_users_on_user_id", using: :btree
+  add_index "qualifications", ["position_id"], name: "index_qualifications_on_position_id", using: :btree
+  add_index "qualifications", ["user_id"], name: "index_qualifications_on_user_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -64,6 +87,39 @@ ActiveRecord::Schema.define(version: 20150906201400) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
+  create_table "schedules", force: true do |t|
+    t.integer  "staff_id"
+    t.integer  "offer_id"
+    t.integer  "location_id"
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "schedules", ["location_id"], name: "index_schedules_on_location_id", using: :btree
+  add_index "schedules", ["offer_id"], name: "index_schedules_on_offer_id", using: :btree
+  add_index "schedules", ["staff_id"], name: "index_schedules_on_staff_id", using: :btree
+
+  create_table "shifts", force: true do |t|
+    t.string   "start"
+    t.string   "duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "staffs", force: true do |t|
+    t.integer  "event_id"
+    t.integer  "position_id"
+    t.integer  "shift_id"
+    t.integer  "permanent_user"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "staffs", ["event_id"], name: "index_staffs_on_event_id", using: :btree
+  add_index "staffs", ["position_id"], name: "index_staffs_on_position_id", using: :btree
+  add_index "staffs", ["shift_id"], name: "index_staffs_on_shift_id", using: :btree
 
   create_table "users", force: true do |t|
     t.integer  "member_number",                       null: false
