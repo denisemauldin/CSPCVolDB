@@ -1,11 +1,8 @@
  <h1>Listing events</h1>
- <pre>
- <%= JSON.pretty_generate(@listings) %>
- </pre>
-<% @listings.each do |listing| %>
-  <% listing.each_slice(2) do |date, events| %>
-    <div style="background: yellow;"><b><%= date %></b></div>
-    <% events.each do |event| %>
+<%  order = @listings.keys.sort %>
+<%  order.each do |date| %>
+  <div style="background: yellow;"><b><%= date %></b></div>
+  <% @listings[date].each do |event| %>
       <% e = event[:event] %>
       <% schedules = Schedule.where(staff_id: e.staffs.map(&:id), date: event[:date].to_time) %>
       <div><b><%= event[:title] %></b></div>
@@ -40,9 +37,8 @@
       <% end %>
       </tbody>
       </table>
-    <% end %>  
+    <% end %>   
   <% end %>
-<% end %>
 <br>
 
 <% if can?(:create, Event) %><%= link_to 'New Event', new_event_path %><% end %>
