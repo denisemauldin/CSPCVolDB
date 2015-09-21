@@ -51,6 +51,16 @@ Role.create(name: "ec", desc: "Event Coordinator")
 
 User.create!(id: 1, username: "Admin", email: "admin@example.com", member_number: "1", password: "password")
 User.create!(id: 2, username: "DeeLiz", email: "gcdenise@yahoo.com", member_number: "14074", password: "testing1")
+User.create!(id: 3, username: "Briedie", email: "briedie@yahoo.com", member_number: "10000", password: "testing1")
+User.create!(id: 4, username: "Bella", email: "bella@yahoo.com", member_number: "20000", password: "testing1")
+User.create!(id: 5, username: "JuliaSet", email: "JuliaSet@yahoo.com", member_number: "30000", password: "testing1")
+User.create!(id: 6, username: "Lola", email: "lola@yahoo.com", member_number: "40000", password: "testing1")
+User.create!(id: 7, username: "Richishere", email: "richishere@yahoo.com", member_number: "50000", password: "testing1")
+User.create!(id: 8, username: "SirNikolia", email: "nikolia@yahoo.com", member_number: "60000", password: "testing1")
+User.create!(id: 9, username: "Teeebone", email: "teeebone@yahoo.com", member_number: "70000", password: "testing1")
+User.create!(id: 10, username: "Mike", email: "mike@yahoo.com", member_number: "90000", password: "testing1")
+User.create!(id: 11, username: "TK", email: "tk@yahoo.com", member_number: "100000", password: "testing1")
+User.create!(id: 12, username: "Larry", email: "larry@yahoo.com", member_number: "10", password: "testing1")
 
 u = User.find(1)
 u.add_role(:dir)
@@ -61,6 +71,17 @@ u.add_role(:ec)
 
 ec = Position.find_by_name("Event Coordinator")
 Qualification.create(user_id: 2, position_id: ec.id, status: "Good", count: 392)
+Qualification.create(user_id: 12, position_id: ec.id, status: "Good", count: 3000)
+Qualification.create(user_id: 11, position_id: ec.id, status: "Good", count: 3920)
+dj = Position.find_by_name("DJ")
+Qualification.create(user_id: 8, position_id: dj.id, status: "Good", count: 392)
+Qualification.create(user_id: 9, position_id: dj.id, status: "Good", count: 392)
+monitor = Position.find_by_name("Monitor")
+Qualification.create(user_id: 7, position_id: monitor.id, status: "Good", count: 39)
+cashier = Position.find_by_name("Cashier")
+Qualification.create(user_id: 3, position_id: cashier.id, status: "Good", count: 300)
+Qualification.create(user_id: 6, position_id: cashier.id, status: "Good", count: 3993)
+
 
 Calendar.create(id: 1, name: "CSPC", description: "Calendar for the Center for Sex Positive Culture in Seattle, WA.", color: "#8911d9")
 Calendar.create(id: 2, name: "FSPC", description: "Calendar for the Foundation for Sex Positive Culture in Seattle, WA.", color: "#940a3b")
@@ -85,16 +106,141 @@ Event.create(
 :rtimes: []
 :extimes: []
 ")
+Event.create(
+  name: "intro-PER-verted",
+  abbv: "IPV",
+  open_time: "18:00:00",
+  duration: 480,
+  default_location: 1,
+  calendar_id: 1,
+  schedule_yaml: "---
+:start_time: 2000-01-01 18:00:00.000000000 -08:00
+:start_date: 2000-01-01 18:00:00.000000000 -08:00
+:rrules:
+- :validations:
+    :day_of_week:
+      5:
+      - 2
+  :rule_type: IceCube::MonthlyRule
+  :interval: 1
+:rtimes: []
+:extimes: []
+")
+
+Event.create(
+  name: "Power Play Mixed Tape",
+  abbv: "PPMT",
+  open_time: "20:00:00",
+  duration: 480,
+  default_location: 1,
+  calendar_id: 1,
+  schedule_yaml: "---
+:start_time: 2000-01-01 20:00:00.000000000 -08:00
+:start_date: 2000-01-01 20:00:00.000000000 -08:00
+:rrules:
+- :validations:
+    :day_of_week:
+      6:
+      - 3
+  :rule_type: IceCube::MonthlyRule
+  :interval: 1
+:rtimes: []
+:extimes: []
+")
+
+Event.create(
+  name: "In Irons",
+  abbv: "Irons",
+  open_time: "20:00:00",
+  duration: 480,
+  default_location: 1,
+  calendar_id: 1,
+  schedule_yaml: "---
+:start_time: 2000-01-01 20:00:00.000000000 -08:00
+:start_date: 2000-01-01 20:00:00.000000000 -08:00
+:rrules:
+- :validations:
+    :day_of_week:
+      6:
+      - 4
+  :rule_type: IceCube::MonthlyRule
+  :interval: 1
+:rtimes: []
+:extimes: []
+")
+
+Event.create(
+  name: "Monday Madness",
+  abbv: "MM",
+  open_time: "19:00:00",
+  duration: 300,
+  default_location: 1,
+  calendar_id: 1,
+  schedule_yaml: "---
+:start_time: 2000-01-01 19:00:00.000000000 -08:00
+:start_date: 2000-01-01 19:00:00.000000000 -08:00
+:rrules:
+- :validations:
+    :day:
+    - 1
+  :rule_type: IceCube::WeeklyRule
+  :interval: 1
+  :week_start: 0
+:rtimes: []
+:extimes: []
+")
 
 Location.create(name: "Main Space", description: "The main space of the Center for Sex Positive Culture.")
 
-Shift.create(start: "18:00", duration: "360") # starts at 6pm, 6 hours long, ends at midnight
-Shift.create(start: "18:00", duration: "180") # starts at 6pm, 3 hours long, ends at 9pm
-Shift.create(start: "21:00", duration: "180") # starts at 9pm, 3 hours long, ends at midnight
+Shift.create(start: "18:00", duration: "360") # 1, starts at 6pm, 6 hours long, ends at midnight
+Shift.create(start: "18:00", duration: "180") # 2, starts at 6pm, 3 hours long, ends at 9pm
+Shift.create(start: "21:00", duration: "180") # 3, starts at 9pm, 3 hours long, ends at midnight
+Shift.create(start: "19:00", duration: "180") # 4, starts at 7pm, 3 hours long, ends at 10pm
+Shift.create(start: "19:30", duration: "210") # 5, starts at 7:30 pm, 3 1/2 hours long, ends at 11 pm
+Shift.create(start: "22:30", duration: "210") # 6, starts at 10:30 pm, 3 1/2 hours long, ends at 2 am
+Shift.create(start: "19:00", duration: "240") # 7, starts at 7pm, 4 hours long, ends at 11 pm
+Shift.create(start: "22:30", duration: "240") # 8, starts at 10:30 pm, 4 hours long, ends at 2:30 am
+Shift.create(start: "19:00", duration: "60")  # 9, starts at 7pm, 1 hour long, ends at 8pm
+Shift.create(start: "19:30", duration: "180") #10, starts at 7:30 pm, 3 hours long, ends at 10:30 pm
+Shift.create(start: "20:00", duration: "180") #11, starts at 8pm, 3 hours long, ends at 11pm
+Shift.create(start: "22:00", duration: "180") #12, starts at 10pm, 3 hours long, ends at 1 am
+Shift.create(start: "23:00", duration: "180") #13, starts at 11pm, 3 hours long, ends at 2 am
+Shift.create(start: "01:30", duration: "60")  #14, starts at 1:30 am, 1 hour long, ends at 2:30 am
+Shift.create(start: "18:00", duration: "210") #15, starts at 6pm, 3 1/2 hours long, ends at 9:30 pm
 
+# rough and tumble
 Staff.create(event_id: 1, position_id: ec.id, shift_id: 1, permanent_user: 2) # all shift EC
 Staff.create(event_id: 1, position_id: 1, shift_id: 2, permanent_user: "")  # first shift cashier
-Staff.create(event_id: 1, position_id: 1, shift_id: 3, permanent_user: "")  # second shift cashier
+Staff.create(event_id: 1, position_id: 1, shift_id: 3, permanent_user: 3)  # second shift cashier
+
+# monday madness
+mm = Event.find_by_name("Monday Madness")
+Staff.create(event_id: mm.id, position_id: ec.id, shift_id: 15, permanent_user: 12)
+
+# power play mixed tape
+ppmt = Event.find_by_name("Power Play Mixed Tape")
+Staff.create(event_id: ppmt.id, position_id: cashier.id, shift_id: 5, permanent_user: 6)  # first shift cashier
+Staff.create(event_id: ppmt.id, position_id: cashier.id, shift_id: 6, permanent_user: "")  # second shift cashier
+Staff.create(event_id: ppmt.id, position_id: ec.id, shift_id: 7, permanent_user: 12)  # first shift EC
+Staff.create(event_id: ppmt.id, position_id: ec.id, shift_id: 8, permanent_user: 12)  # second shift EC
+host = Position.find_by_name("Host")
+Staff.create(event_id: ppmt.id, position_id: host.id, shift_id: 4, permanent_user: 6)  # first shift host
+fp = Position.find_by_name("Food Prep")
+Staff.create(event_id: ppmt.id, position_id: fp.id, shift_id: 9, permanent_user: 4)  # food prep
+setup = Position.find_by_name("Setup")
+Staff.create(event_id: ppmt.id, position_id: setup.id, shift_id: 9, permanent_user: "" )  # setup
+Staff.create(event_id: ppmt.id, position_id: setup.id, shift_id: 9, permanent_user: 5 )  # setup
+Staff.create(event_id: ppmt.id, position_id: monitor.id, shift_id: 10, permanent_user: "" )  # monitor
+Staff.create(event_id: ppmt.id, position_id: monitor.id, shift_id: 11, permanent_user: 7 )  # monitor
+Staff.create(event_id: ppmt.id, position_id: monitor.id, shift_id: 12, permanent_user: "" )  # monitor
+Staff.create(event_id: ppmt.id, position_id: monitor.id, shift_id: 13, permanent_user: "" )  # monitor
+Staff.create(event_id: ppmt.id, position_id: dj.id, shift_id: 11, permanent_user: 8 )  # first shift dj
+Staff.create(event_id: ppmt.id, position_id: dj.id, shift_id: 13, permanent_user: 9 )  # second shift dj
+strike = Position.find_by_name("Strike")
+Staff.create(event_id: ppmt.id, position_id: strike.id, shift_id: 14, permanent_user: 10 )  # strike
+Staff.create(event_id: ppmt.id, position_id: strike.id, shift_id: 14, permanent_user: "" )  # strike
+
+
 
 rnt = Event.find(1)
 Schedule.create(date: rnt.recurring_schedule.next_occurrence(), location_id: 1, staff_id: 1)  

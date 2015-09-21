@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   
   resources :offers
-
   resources :qualifications
-
   resources :locations
   resources :schedules
   resources :staffs
@@ -15,6 +13,7 @@ Rails.application.routes.draw do
   resources :events
   resources :users
   get 'calendar_events' => 'events#calendar_events'    
+  get 'listing' => 'events#listing'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

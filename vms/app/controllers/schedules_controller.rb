@@ -4,7 +4,7 @@ class SchedulesController < ApplicationController
   respond_to :html
 
   def index
-    @schedules = Schedule.all
+    @schedules = Schedule.order(:date)
     respond_with(@schedules)
   end
 

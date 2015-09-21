@@ -13,15 +13,11 @@
 
   <div class="field">
     <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
+    <%= current_user.username %>
   </div>
   <div class="field">
     <%= f.label :schedule_id %><br>
-    <%= f.text_field :schedule_id %>
-  </div>
-  <div class="field">
-    <%= f.label :accepted %><br>
-    <%= f.number_field :accepted %>
+    <%= f.collection_select :schedule_id, Schedule.all, :id, :info, {:selected => params[:schedule_id]} %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -36,6 +36,26 @@ class EventsController < ApplicationController
     end    
   end
 
+  def listing
+    start_date = Time.now
+    end_date = start_date + 30.days
+    @events = Event.where(nil)
+    @events = @events.where(:calendar_id => params[:calendar_ids].split(',')) if params[:calendar_ids].present?
+    @listings = Hash.new
+    @list_items = Array.new
+    @events.each do |event|  
+      l = event.listing_item(start_date, end_date)
+      @list_items << l
+      Rails.logger.debug("\n l in events loop #{l.inspect}\n") 
+    end
+    @listings = @events.collect { |event| event.listing_item(start_date, end_date) }.inject({}) { |a,b| a.merge(b) { |_,x,y| [*x,*y] } }
+  
+    respond_to do |format|
+      format.html { respond_with @listings }
+      format.json { render json: @listings }
+    end
+  end
+
   def show
   end
 
