@@ -1,0 +1,48 @@
+ <h1>Listing events</h1>
+ <pre>
+ <%= JSON.pretty_generate(@listings) %>
+ </pre>
+<% @listings.each do |listing| %>
+  <% listing.each_slice(2) do |date, events| %>
+    <div style="background: yellow;"><b><%= date %></b></div>
+    <% events.each do |event| %>
+      <% e = event[:event] %>
+      <% schedules = Schedule.where(staff_id: e.staffs.map(&:id), date: event[:date].to_time) %>
+      <div><b><%= event[:title] %></b></div>
+      <table>
+        <thead>
+        <th></th>
+        <th><u>STAFF</u></th>
+        <th><u>START</u></th>
+        <th><u>END</u></th>
+        <th><u>VOLUNTEER</u></th>
+        <th><u>Click below to:</u></th>
+        <th><u>SHADOWS</u></th>
+        <th><u>Click below to:</u></th>
+        </thead>
+        <tbody>        
+      
+      <% schedules.each do |s| %>
+      <tr>
+        <td></td>
+        <td><%= s.position.name %></td>
+        <td><%= s.shift.start %></td>
+        <td><%= s.shift.duration.to_i %></td>
+        <td><%= s.accepted_offer.user.username if s.accepted_offer %></td>
+        <td><%= if s.accepted_offer then 
+                  link_to('Cancel shift', s.accepted_offer, method: :delete, data: { confirm: 'Are you sure?' }) 
+                else 
+                  link_to('Sign up', new_offer_path(schedule_id: s.id))
+                end  
+            %>
+        </td>
+      </tr>
+      <% end %>
+      </tbody>
+      </table>
+    <% end %>  
+  <% end %>
+<% end %>
+<br>
+
+<% if can?(:create, Event) %><%= link_to 'New Event', new_event_path %><% end %>
